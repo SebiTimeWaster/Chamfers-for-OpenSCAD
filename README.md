@@ -8,10 +8,14 @@ The Chamfers are always at a 45° angle to the ground plane and are printable in
 
 ![Demo of possiblities with chamfers](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Chamfer.png)
 
+Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
+
 ## Installation
 * [Download](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/releases) the library
-* Unpack it to <tbd> 
-Or 
+* Unpack it to OpenSCAD\libraries
+
+- OR -
+
 * Open your console
 * Go to OpenSCAD\libraries
 * Run ```git clone https://github.com/SebiTimeWaster/OpenSCAD-Chamfer.git```
