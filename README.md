@@ -14,7 +14,7 @@ Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/O
 * [Download](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/releases) the library
 * Unpack it to OpenSCAD\libraries
 
-- OR -
+OR
 
 * Open your console
 * Go to OpenSCAD\libraries
