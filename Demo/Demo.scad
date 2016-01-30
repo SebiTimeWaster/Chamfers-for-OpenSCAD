@@ -1,4 +1,4 @@
-use <Chamfer/Chamfer.scad>;
+use <Chamfers-for-OpenSCAD/Chamfer.scad>;
 
 // cube demos
 translate([-30, 0, 15])   chamferCube(10, 10, 10);
