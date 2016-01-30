@@ -4,7 +4,7 @@ A library to create primitives with 45° chamfers in OpenSCAD.
 ## What it does
 The commands `chamferCube` and `chamferCylinder` can be used to create chamfered versions of the existing `cube` and `cylinder` commands.
 
-The Chamfers are always at a 45° angle to the ground plane and are printable in a good quality on Fused deposition modelling (FDM) printers.
+The Chamfers are always at a 45° angle to the ground plane and are printable on Fused deposition modelling (FDM) printers in a good quality.
 
 ![Demo of possiblities with chamfers](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Chamfer.png)
 
