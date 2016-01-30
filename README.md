@@ -19,3 +19,7 @@ OR
 * Open your console
 * Go to OpenSCAD\libraries
 * Run ```git clone https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD.git```
+
+## Usage
+Don't forget to import it to your script:
+`use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
