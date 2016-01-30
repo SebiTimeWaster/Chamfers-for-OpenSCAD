@@ -1,4 +1,4 @@
-# OpenSCAD-Chamfer
+# Chamfers for OpenSCAD
 A library to create primitives with 45° chamfers in OpenSCAD.
 
 ## What it does
