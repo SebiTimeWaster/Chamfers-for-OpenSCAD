@@ -21,5 +21,6 @@ OR
 * Run ```git clone https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD.git```
 
 ## Usage
-Don't forget to import it to your script:
+Don't forget to import it to your script by add this to the first line:
+
 `use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
