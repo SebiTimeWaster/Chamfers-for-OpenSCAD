@@ -1,4 +1,4 @@
-# Chamfered primitives for OpenSCAD (Also: Wedges)
+# Chamfered primitives for OpenSCAD
 A library to create primitives with 45° chamfers in OpenSCAD.
 
 ## What it does
