@@ -13,12 +13,14 @@ Additionally the `chamferCylinder` can also produce a circular sector (wedge), w
 ## Installation
 * [Download](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/releases) the library
 * Unpack it to OpenSCAD\libraries
+* Restart OpenSCAD
 
 OR
 
 * Open your console
 * Go to OpenSCAD\libraries
 * Run ```git clone https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD.git```
+* Restart OpenSCAD
 
 ## Usage
 Don't forget to import the library to your script by adding this to the first line:
