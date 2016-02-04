@@ -22,6 +22,7 @@ OR
 
 ## Usage
 Don't forget to import the library to your script by adding this to the first line:
+
 `use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
 
 Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
