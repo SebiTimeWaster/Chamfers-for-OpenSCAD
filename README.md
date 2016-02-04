@@ -1,4 +1,4 @@
-# Chamfers for OpenSCAD
+# Chamfered primitives for OpenSCAD (Also: Wedges)
 A library to create primitives with 45° chamfers in OpenSCAD.
 
 ## What it does
@@ -8,7 +8,7 @@ The Chamfers are always at a 45° angle to the ground plane and are printable on
 
 ![Demo of possiblities with chamfers](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Chamfer.png)
 
-Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
+Additionally the `chamferCylinder` can also produce a circular sector (wedge), which the original cylinder command cannot do.
 
 ## Installation
 * [Download](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/releases) the library
@@ -22,5 +22,6 @@ OR
 
 ## Usage
 Don't forget to import the library to your script by adding this to the first line:
-
 `use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
+
+Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
