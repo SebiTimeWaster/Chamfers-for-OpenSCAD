@@ -8,7 +8,13 @@ The Chamfers are always at a 45° angle to the ground plane and are printable on
 
 ![Demo of possiblities with chamfers](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Chamfer.png)
 
-Additionally the `chamferCylinder` can also produce a circular sector (wedge), which the original cylinder command cannot do.
+Additionally
+* The `chamferCylinder` can also produce a circular sector (wedge), what the cylinder command cannot
+* The `circleSegments` function calculates the amount of segments needed for a certain circle radius, it reproduces a much better quality than $fa and $fs settings
+
+Changelog v0.2:
+* Added new circle quality feature (segment calculator) which introduces an incompatibility with v0.1
+* Prevented cylinders with height 0 from being created when setting chamferHeight to 0
 
 ## Installation
 * [Download](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/releases) the library
