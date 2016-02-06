@@ -1,7 +1,7 @@
 /**
   *  The MIT License (MIT)
   *
-  *  "Snake for MicroView" v1.0 Copyright (c) 2014 SebiTimeWaster
+  *  "Chamfers for OpenSCAD" v1.0 Copyright (c) 2016 SebiTimeWaster
   *
   *  Permission is hereby granted, free of charge, to any person obtaining a copy
   *  of this software and associated documentation files (the "Software"), to deal
