@@ -1,25 +1,33 @@
 use <Chamfers-for-OpenSCAD/Chamfer.scad>;
 
 // cube demos
-translate([-30, 0, 15])   chamferCube(10, 10, 10);
-translate([-15, 0, 15])   chamferCube(10, 10, 10, 2);
-translate([0, 0, 15])     chamferCube(10, 10, 10, 1, [1, 0, 0, 0]);
-translate([15, 0, 15])    chamferCube(10, 10, 10, 1, [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]);
+translate([-27.5, -5, 12]) chamferCube(10, 10, 10);
+translate([-12.5, -5, 12]) chamferCube(10, 10, 10, 2);
+translate([2.5, -5, 12])   chamferCube(10, 10, 10, 1, [1, 0, 0, 0]);
+translate([17.5, -5, 12])  chamferCube(10, 10, 10, 1, [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]);
 
 // cylinder demos 
-translate([-30, 0, 0])    chamferCylinder(10, 5);
-translate([-15, 0, 0])    chamferCylinder(10, 5, 5, 150, 2);
-translate([0, 0, 0])      chamferCylinder(10, 5, 5, 150, -1);
-translate([15, 0, 0])     chamferCylinder(10, 5, 5, 150, 1, 90);
-translate([30, 0, 0])     chamferCylinder(10, 5, 5, 150, -1, 240);
+translate([-30, 0, -5])    chamferCylinder(10, 5);
+translate([-15, 0, -5])    chamferCylinder(10, 5, 5, 2);
+translate([0, 0, -5])      chamferCylinder(10, 5, 5, -1);
+translate([15, 0, -5])     chamferCylinder(10, 5, 5, 1, 90);
+translate([30, 0, -5])     chamferCylinder(10, 5, 5, -1, 240);
 
 // cone demos 
-translate([-30, 0, -15])  chamferCylinder(10, 5, 2, 50, 1);
-translate([-15, 0, -15])  chamferCylinder(10, 5, 2, 150, 2);
-translate([0, 0, -15])    chamferCylinder(10, 5, 2, 150, -1);
-translate([15, 0, -15])   chamferCylinder(10, 5, 2, 150, 1, 90);
-translate([30, 0, -15])   chamferCylinder(10, 5, 2, 150, -1, 240);
+translate([-30, 0, -20])   chamferCylinder(10, 5, 2, 1, 0, 0.2);
+translate([-15, 0, -20])   chamferCylinder(10, 5, 2, 2);
+translate([0, 0, -20])     chamferCylinder(10, 5, 2, -1);
+translate([15, 0, -20])    chamferCylinder(10, 5, 2, 1, 90);
+translate([30, 0, -20])    chamferCylinder(10, 5, 2, -1, 240);
 
+// circleSegments demo
+translate([-15, 0, -35])   cylinder(h=10, r=5, $fn=circleSegments(5, 0.5));
+translate([0, 0, -35])     cylinder(h=10, r=5, $fn=circleSegments(5));
+translate([15, 0, -35])    cylinder(h=10, r=5, $fn=circleSegments(5, 1.5));
+// number of segments depends on circle radius
+translate([-15, 0, -50])   cylinder(h=10, r=1, $fn=circleSegments(1));
+translate([0, 0, -50])     cylinder(h=10, r=3, $fn=circleSegments(3));
+translate([15, 0, -50])    cylinder(h=10, r=5, $fn=circleSegments(5));
 
 /**
  * chamferCube returns an cube with 45° chamfers on the edges of the
@@ -51,11 +59,23 @@ translate([30, 0, -15])   chamferCylinder(10, 5, 2, 150, -1, 240);
  * @param  height         Height of the cylinder
  * @param  radius         Radius of the cylinder (At the bottom)
  * @param  radius2        Radius of the cylinder (At the top)
- * @param  fragments      How fine the cylinder gets reproduced
  * @param  chamferHeight  The "height" of the chamfers as seen from 
  *                        one of the dimensional planes (The real 
  *                        width is side c in a right angled triangle)
  * @param  angle          The radius of the visible part of a wedge
- *                        starting from the x axis counter-clockwise        
+ *                        starting from the x axis counter-clockwise
+ * @param  quality        A quality factor where 1.0 is a fairly good
+ *                        quality, range from 0.0 to 2.0
+ *
+ * ---------------------------------------------------------------------
+ *
+ * circleSegments calculates the number of segments needed to maintain 
+ * a constant circle quality.
+ *
+ * @param  r        Radius of the circle
+ * @param  quality  A quality factor, where 1.0 is a fairly good
+ *                  quality, range from 0.0 to 2.0
+ *
+ * @return  The number of segments for the circle
  */
  
