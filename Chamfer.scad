@@ -1,7 +1,7 @@
 /**
   *  The MIT License (MIT)
   *
-  *  "Chamfers for OpenSCAD" v1.0 Copyright (c) 2016 SebiTimeWaster
+  *  "Chamfers for OpenSCAD" v0.2 Copyright (c) 2016 SebiTimeWaster
   *
   *  Permission is hereby granted, free of charge, to any person obtaining a copy
   *  of this software and associated documentation files (the "Software"), to deal
@@ -88,9 +88,13 @@ module chamferCube(sizeX, sizeY, sizeZ, chamferHeight = 1, chamferX = [1, 1, 1, 
 module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle = 0, quality = 1.0) {
 	radius2 = (radius2 == undef) ? radius : radius2;
 	module cc() {
-		translate([0, 0, height - abs(chamferHeight)]) cylinder(abs(chamferHeight), r1 = radius2, r2 = radius2 - chamferHeight, $fn = circleSegments(radius2, quality));
+		if(chamferHeight != 0) {
+			translate([0, 0, height - abs(chamferHeight)]) cylinder(abs(chamferHeight), r1 = radius2, r2 = radius2 - chamferHeight, $fn = circleSegments(radius2, quality));
+		}
 		translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight) * 2, r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
-		cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+		if(chamferHeight != 0) {
+			cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+		}
 	}
 	module box(brim = abs(min(chamferHeight, 0)) + 1) {
 		translate([-radius - brim, 0, -brim]) cube([radius * 2 + brim * 2, radius + brim, height + brim * 2]);
