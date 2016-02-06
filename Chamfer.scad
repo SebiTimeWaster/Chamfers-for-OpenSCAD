@@ -77,19 +77,20 @@ module chamferCube(sizeX, sizeY, sizeZ, chamferHeight = 1, chamferX = [1, 1, 1, 
  * @param  height         Height of the cylinder
  * @param  radius         Radius of the cylinder (At the bottom)
  * @param  radius2        Radius of the cylinder (At the top)
- * @param  fragments      How fine the cylinder gets reproduced
  * @param  chamferHeight  The "height" of the chamfers as seen from 
  *                        one of the dimensional planes (The real 
  *                        width is side c in a right angled triangle)
  * @param  angle          The radius of the visible part of a wedge
  *                        starting from the x axis counter-clockwise
+ * @param  quality        A quality factor where 1.0 is a fairly good
+ *                        quality, range from 0.0 to 2.0
  */
-module chamferCylinder(height, radius, radius2=undef, fragments = 50, chamferHeight = 1, angle = 0) {
+module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle = 0, quality = 1.0) {
 	radius2 = (radius2 == undef) ? radius : radius2;
 	module cc() {
-		translate([0, 0, height - abs(chamferHeight)]) cylinder(abs(chamferHeight), r1 = radius2, r2 = radius2 - chamferHeight, $fn = fragments);
-		translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight) * 2, r1 = radius, r2 = radius2, $fn = fragments);
-		cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = fragments);
+		translate([0, 0, height - abs(chamferHeight)]) cylinder(abs(chamferHeight), r1 = radius2, r2 = radius2 - chamferHeight, $fn = circleSegments(radius2, quality));
+		translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight) * 2, r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
+		cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
 	}
 	module box(brim = abs(min(chamferHeight, 0)) + 1) {
 		translate([-radius - brim, 0, -brim]) cube([radius * 2 + brim * 2, radius + brim, height + brim * 2]);
@@ -110,3 +111,15 @@ module chamferCylinder(height, radius, radius2=undef, fragments = 50, chamferHei
 		}
 	}
 }
+
+/**
+ * circleSegments calculates the number of segments needed to maintain 
+ * a constant circle quality.
+ *
+ * @param  r        Radius of the circle
+ * @param  quality  A quality factor, where 1.0 is a fairly good
+ *                  quality, range from 0.0 to 2.0
+ *
+ * @return  The number of segments for the circle
+ */
+function circleSegments(r, quality = 1.0) = (r * PI * 4 + 40) * quality;
