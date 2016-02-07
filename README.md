@@ -15,6 +15,7 @@ Additionally
 
 Changelog v0.3:
 * Added a global override for the standard circle quality
+
 Changelog v0.2:
 * Added new circle quality feature (segment calculator) which introduces an incompatibility with v0.1
 * Prevented cylinders with height 0 from being created when setting chamferHeight to 0
@@ -34,6 +35,6 @@ OR
 ## Usage
 Don't forget to import the library to your script by adding this to the first line:
 
-`use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
+`include <Chamfers-for-OpenSCAD/Chamfer.scad>;`
 
 Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
