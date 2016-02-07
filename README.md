@@ -11,6 +11,10 @@ The Chamfers are always at a 45° angle to the ground plane and are printable on
 Additionally
 * The `chamferCylinder` can also produce a circular sector (wedge), what the cylinder command cannot
 * The `circleSegments` function calculates the amount of segments needed for a certain circle radius, it reproduces a much better quality than $fa and $fs settings
+* A `globalCircleQuality` variable can be set to globally override the standard setting of 1.0, but the quality setting in `chamferCylinder` stil has precedence over this variable
+
+Changelog v0.3:
+* Added a global override for the standard circle quality
 
 Changelog v0.2:
 * Added new circle quality feature (segment calculator) which introduces an incompatibility with v0.1
@@ -31,6 +35,6 @@ OR
 ## Usage
 Don't forget to import the library to your script by adding this to the first line:
 
-`use <Chamfers-for-OpenSCAD/Chamfer.scad>;`
+`include <Chamfers-for-OpenSCAD/Chamfer.scad>;`
 
 Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
