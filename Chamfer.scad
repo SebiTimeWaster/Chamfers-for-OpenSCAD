@@ -82,10 +82,10 @@ module chamferCube(sizeX, sizeY, sizeZ, chamferHeight = 1, chamferX = [1, 1, 1, 
   *                        width is side c in a right angled triangle)
   * @param  angle          The radius of the visible part of a wedge
   *                        starting from the x axis counter-clockwise
-  * @param  quality        A quality factor where 1.0 is a fairly good
-  *                        quality, range from 0.0 to 2.0
+  * @param  quality        A circle quality factor where 1.0 is a fairly
+  *                        good quality, range from 0.0 to 2.0
   */
-module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle = 0, quality = 1.0) {
+module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle = 0, quality = -1.0) {
     radius2 = (radius2 == undef) ? radius : radius2;
     module cc() {
         if(chamferHeight != 0) {
@@ -119,6 +119,9 @@ module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle =
 /**
   * circleSegments calculates the number of segments needed to maintain
   * a constant circle quality.
+  * If a globalSegementsQuality variable exist it will overwrite the
+  * standard quality setting (1.0). Order of usage is:
+  * Standard (1.0) <- globalCircleQuality <- Quality parameter
   *
   * @param  r        Radius of the circle
   * @param  quality  A quality factor, where 1.0 is a fairly good
@@ -126,4 +129,4 @@ module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle =
   *
   * @return  The number of segments for the circle
   */
-function circleSegments(r, quality = 1.0) = (r * PI * 4 + 40) * quality;
+function circleSegments(r, quality = -1.0) = (r * PI * 4 + 40) * ((quality >= 0.0) ? quality : (globalCircleQuality == undef) ? 1.0 : globalCircleQuality);

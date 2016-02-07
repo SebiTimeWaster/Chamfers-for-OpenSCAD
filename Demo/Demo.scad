@@ -1,10 +1,16 @@
-use <Chamfers-for-OpenSCAD/Chamfer.scad>;
+include <Chamfers-for-OpenSCAD/Chamfer.scad>;
 
 // cube demos
 translate([-27.5, -5, 12]) chamferCube(10, 10, 10);
 translate([-12.5, -5, 12]) chamferCube(10, 10, 10, 2);
 translate([2.5, -5, 12])   chamferCube(10, 10, 10, 1, [1, 0, 0, 0]);
 translate([17.5, -5, 12])  chamferCube(10, 10, 10, 1, [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]);
+
+/**
+  * With this variable you can GLOBALLY override the standard circle quality of 1.0.
+  * This variable will only work when set outside of all blocks.
+  */
+//globalCircleQuality = 0.1;
 
 // cylinder demos
 translate([-30, 0, -5])    chamferCylinder(10, 5);
@@ -64,13 +70,16 @@ translate([15, 0, -50])    cylinder(h=10, r=5, $fn=circleSegments(5));
   *                        width is side c in a right angled triangle)
   * @param  angle          The radius of the visible part of a wedge
   *                        starting from the x axis counter-clockwise
-  * @param  quality        A quality factor where 1.0 is a fairly good
-  *                        quality, range from 0.0 to 2.0
+  * @param  quality        A circle quality factor where 1.0 is a fairly
+  *                        good quality, range from 0.0 to 2.0
   *
   * ---------------------------------------------------------------------
   *
   * circleSegments calculates the number of segments needed to maintain
   * a constant circle quality.
+  * If a globalSegementsQuality variable exist it will overwrite the
+  * standard quality setting (1.0). Order of usage is:
+  * Standard (1.0) <- globalCircleQuality <- Quality parameter
   *
   * @param  r        Radius of the circle
   * @param  quality  A quality factor, where 1.0 is a fairly good
