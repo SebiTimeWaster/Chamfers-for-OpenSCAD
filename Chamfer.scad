@@ -129,4 +129,7 @@ module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, angle =
   *
   * @return  The number of segments for the circle
   */
-function circleSegments(r, quality = -1.0) = (r * PI * 4 + 40) * ((quality >= 0.0) ? quality : (globalCircleQuality == undef) ? 1.0 : globalCircleQuality);
+function circleSegments(r, quality = -1.0) = (r * PI * 4 + 40) * ((quality >= 0.0) ? quality : globalCircleQuality);
+
+// set global quality to 1.0, can be overridden by user
+globalCircleQuality = 1.0;
