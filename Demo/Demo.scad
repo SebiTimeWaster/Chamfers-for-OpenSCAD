@@ -15,17 +15,17 @@ translate([17.5, -5, 12])  chamferCube(10, 10, 10, 1, [0, 0, 0, 0], [1, 1, 1, 1]
 
 // cylinder demos
 translate([-30, 0, -5])    chamferCylinder(10, 5);
-translate([-15, 0, -5])    chamferCylinder(10, 5, 5, 2);
-translate([0, 0, -5])      chamferCylinder(10, 5, 5, -1);
-translate([15, 0, -5])     chamferCylinder(10, 5, 5, 1, 90);
-translate([30, 0, -5])     chamferCylinder(10, 5, 5, -1, 240);
+translate([-15, 0, -5])    chamferCylinder(10, 5, 5, 2, 4);
+translate([0, 0, -5])      chamferCylinder(10, 5, 5, 3, -1);
+translate([15, 0, -5])     chamferCylinder(10, 5, 5, 1, undef, 90);
+translate([30, 0, -5])     chamferCylinder(10, 5, 5, -1, angle=240);
 
 // cone demos
 translate([-30, 0, -20])   chamferCylinder(10, 5, 2, 1, 0, 0.2);
-translate([-15, 0, -20])   chamferCylinder(10, 5, 2, 2);
+translate([-15, 0, -20])   chamferCylinder(10, 5, 2, 3, 1);
 translate([0, 0, -20])     chamferCylinder(10, 5, 2, -1);
-translate([15, 0, -20])    chamferCylinder(10, 5, 2, 1, 90);
-translate([30, 0, -20])    chamferCylinder(10, 5, 2, -1, 240);
+translate([15, 0, -20])    chamferCylinder(10, 5, 2, 1, angle=90);
+translate([30, 0, -20])    chamferCylinder(10, 5, 2, -1, angle=240);
 
 // circleSegments demo
 translate([-15, 0, -35])   cylinder(h=10, r=5, $fn=circleSegments(5, 0.5));
