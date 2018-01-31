@@ -1,5 +1,5 @@
-// this changed from "use" to "include" with v0.3!!!
-include <Chamfers-for-OpenSCAD/Chamfer.scad>;
+// The use statement should be preferred over the include statement
+use <Chamfers-for-OpenSCAD/Chamfer.scad>;
 
 // cube demos
 translate([-27.5, -5, 12]) chamferCube(10, 10, 10);
