@@ -6,7 +6,7 @@ The commands `chamferCube` and `chamferCylinder` can be used to create chamfered
 
 The Chamfers are always at a 45° angle to the ground plane and are printable on Fused deposition modelling (FDM) printers in a good quality.
 
-![Demo of possiblities with chamfers](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Chamfer.png)
+![Demo of possiblities with chamfers](Chamfer.png)
 
 Additionally
 * The `chamferCylinder` can also produce a circular sector (wedge), what the cylinder command cannot
