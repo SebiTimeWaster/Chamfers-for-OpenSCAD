@@ -96,7 +96,7 @@ module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, chamfer
             translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
         }
         translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight), r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
-        if(chamferHeight2 != 0) {
+        if(chamferHeight != 0) {
             cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
         }
     }
