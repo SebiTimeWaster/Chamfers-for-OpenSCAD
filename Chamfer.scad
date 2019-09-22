@@ -1,50 +1,54 @@
 /**
-  *  The MIT License (MIT)
+  * This code is published under a
+  * Creative Commons Attribution-NonCommercial-ShareAlike 3.0
+  * licence, please respect it.
   *
-  *  "Chamfers for OpenSCAD" v0.4 Copyright (c) 2016 SebiTimeWaster
-  *
-  *  Permission is hereby granted, free of charge, to any person obtaining a copy
-  *  of this software and associated documentation files (the "Software"), to deal
-  *  in the Software without restriction, including without limitation the rights
-  *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  *  copies of the Software, and to permit persons to whom the Software is
-  *  furnished to do so, subject to the following conditions:
-  *
-  *  The above copyright notice and this permission notice shall be included in all
-  *  copies or substantial portions of the Software.
-  *
-  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  *  SOFTWARE.
+  * Chamfered primitives for OpenSCAD v1.0
   */
+
 
 /**
   * chamferCube returns an cube with 45° chamfers on the edges of the
   * cube. The chamfers are diectly printable on Fused deposition
   * modelling (FDM) printers without support structures.
   *
-  * @param  sizeX          The size of the cube along the x axis
-  * @param  sizeY          The size of the cube along the y axis
-  * @param  sizeZ          The size of the cube along the z axis
-  * @param  chamferHeight  The "height" of the chamfers as seen from
-  *                        one of the dimensional planes (The real
-  *                        width is side c in a right angled triangle)
-  * @param  chamferX       Which chamfers to render along the x axis
-  *                        in clockwise order starting from the zero
-  *                        point, as seen from "Left view" (Ctrl + 6)
-  * @param  chamferY       Which chamfers to render along the y axis
-  *                        in clockwise order starting from the zero
-  *                        point, as seen from "Front view" (Ctrl + 8)
-  * @param  chamferZ       Which chamfers to render along the z axis
-  *                        in clockwise order starting from the zero
-  *                        point, as seen from "Bottom view" (Ctrl + 5)
+  * @param  size      The size of the cube along the [x, y, z] axis, 
+  *                     example: [1, 2, 3]
+  * @param  chamfers  Which chamfers to render along the [x, y, z] axis, 
+  *                     example: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
+  *                     X axis: 4 values in clockwise order starting from 
+  *                     the zero point, as seen from "Left view" (Ctrl + 6)
+  *                     Y axis: 4 values in clockwise order starting from
+  *                     the zero point, as seen from "Front view" (Ctrl + 8)
+  *                     Z axis: 4 values in clockwise order starting from
+  *                     the zero point, as seen from "Bottom view" (Ctrl + 5)
+  * @param  ch        The "height" of the chamfers as seen from
+  *                     one of the dimensional planes (The real
+  *                     length is side c in a right angled triangle)
   */
-module chamferCube(sizeX, sizeY, sizeZ, chamferHeight = 1, chamferX = [1, 1, 1, 1], chamferY = [1, 1, 1, 1], chamferZ = [1, 1, 1, 1]) {
+module chamferCube(size, chamfers = [undef, undef, undef], ch = 1, ph1 = 1, ph2 = undef, ph3 = undef, ph4 = undef, sizeX = undef, sizeY = undef, sizeZ = undef, chamferHeight = undef, chamferX = undef, chamferY = undef, chamferZ = undef) {
+    if(size[0]) {
+        chamferCubeImpl(size[0], size[1], size[2], ch, chamfers[0], chamfers[1], chamfers[2]);
+    } else {
+        // keep backwards compatibility
+        size     = (sizeX == undef) ? size : sizeX;
+        chamfers = (sizeY == undef) ? chamfers : sizeY;
+        ch       = (sizeZ == undef) ? ch : sizeZ;
+        ph1      = (chamferHeight == undef) ? ph1 : chamferHeight;
+        ph2      = (chamferX == undef) ? ph2 : chamferX;
+        ph3      = (chamferY == undef) ? ph3 : chamferY;
+        ph4      = (chamferZ == undef) ? ph4 : chamferZ;
+        
+        chamferCubeImpl(size, chamfers, ch, ph1, ph2, ph3, ph4);
+    }
+}
+    
+module chamferCubeImpl(sizeX, sizeY, sizeZ, chamferHeight, chamferX, chamferY, chamferZ) {
+    chamferX = (chamferX == undef) ? [1, 1, 1, 1] : chamferX;
+    chamferY = (chamferY == undef) ? [1, 1, 1, 1] : chamferY;
+    chamferZ = (chamferZ == undef) ? [1, 1, 1, 1] : chamferZ;
     chamferCLength = sqrt(chamferHeight * chamferHeight * 2);
+
     difference() {
         cube([sizeX, sizeY, sizeZ]);
         for(x = [0 : 3]) {
@@ -74,23 +78,38 @@ module chamferCube(sizeX, sizeY, sizeZ, chamferHeight = 1, chamferX = [1, 1, 1, 
   * the edges of the cylinder. The chamfers are diectly printable on
   * Fused deposition modelling (FDM) printers without support structures.
   *
-  * @param  height         Height of the cylinder
-  * @param  radius         Radius of the cylinder (At the bottom)
-  * @param  radius2        Radius of the cylinder (At the top)
-  * @param  chamferHeight  The "height" of the chamfer at radius 1 as
-  *                        seen from one of the dimensional planes (The 
-  *                        real width is side c in a right angled triangle)
-  * @param  chamferHeight2 The "height" of the chamfer at radius 2 as
-  *                        seen from one of the dimensional planes (The 
-  *                        real width is side c in a right angled triangle)
-  * @param  angle          The radius of the visible part of a wedge
-  *                        starting from the x axis counter-clockwise
-  * @param  quality        A circle quality factor where 1.0 is a fairly
-  *                        good quality, range from 0.0 to 2.0
+  * @param  h    Height of the cylinder
+  * @param  r    Radius of the cylinder (At the bottom)
+  * @param  r2   Radius of the cylinder (At the top)
+  * @param  ch   The "height" of the chamfer at radius 1 as
+  *                seen from one of the dimensional planes (The 
+  *                real length is side c in a right angled triangle)
+  * @param  ch2  The "height" of the chamfer at radius 2 as
+  *                seen from one of the dimensional planes (The 
+  *                real length is side c in a right angled triangle)
+  * @param  a    The angle of the visible part of a wedge
+  *                starting from the x axis counter-clockwise
+  * @param  q    A circle quality factor where 1.0 is a fairly
+  *                good quality, range from 0.0 to 2.0
   */
-module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, chamferHeight2=undef, angle = 0, quality = -1.0) {
-    radius2 = (radius2 == undef) ? radius : radius2;
-    chamferHeight2 = (chamferHeight2 == undef) ? chamferHeight : chamferHeight2;
+module chamferCylinder(h, r, r2 = undef, ch = 1, ch2 = undef, a = 0, q = -1.0, height = undef, radius = undef, radius2 = undef, chamferHeight = undef, chamferHeight2 = undef, angle = undef, quality = undef) {
+    // keep backwards compatibility
+    h   = (height == undef) ? h : height;
+    r   = (radius == undef) ? r : radius;
+    r2  = (radius2 == undef) ? r2 : radius2;
+    ch  = (chamferHeight == undef) ? ch : chamferHeight;
+    ch2 = (chamferHeight2 == undef) ? ch2 : chamferHeight2;
+    a   = (angle == undef) ? a : angle;
+    q   = (quality == undef) ? q : quality;
+    
+    height         = h;
+    radius         = r;
+    radius2        = (r2 == undef) ? r : r2;
+    chamferHeight  = ch;
+    chamferHeight2 = (ch2 == undef) ? ch : ch2;
+    angle          = a;
+    quality        = q;
+    
     module cc() {
         if(chamferHeight2 != 0) {
             translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
@@ -127,13 +146,13 @@ module chamferCylinder(height, radius, radius2=undef, chamferHeight = 1, chamfer
   * standard quality setting (1.0). Order of usage is:
   * Standard (1.0) <- globalCircleQuality <- Quality parameter
   *
-  * @param  r        Radius of the circle
-  * @param  quality  A quality factor, where 1.0 is a fairly good
-  *                  quality, range from 0.0 to 2.0
+  * @param  r  Radius of the circle
+  * @param  q  A quality factor, where 1.0 is a fairly good
+  *              quality, range from 0.0 to 2.0
   *
   * @return  The number of segments for the circle
   */
-function circleSegments(r, quality = -1.0) = (r * PI * 4 + 40) * ((quality >= 0.0) ? quality : globalCircleQuality);
+function circleSegments(r, q = -1.0) = (r * PI * 4 + 40) * ((q >= 0.0) ? q : globalCircleQuality);
 
 // set global quality to 1.0, can be overridden by user
 globalCircleQuality = 1.0;
