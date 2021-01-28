@@ -111,12 +111,29 @@ module chamferCylinder(h, r, r2 = undef, ch = 1, ch2 = undef, a = 0, q = -1.0, h
     quality        = q;
     
     module cc() {
-        if(chamferHeight2 != 0) {
-            translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
+        upperOverLength = (chamferHeight2 >= 0) ? 0 : 0.01;
+        lowerOverLength = (chamferHeight >= 0) ? 0 : 0.01;
+
+        if(chamferHeight >= 0 || chamferHeight2 >= 0) {
+            hull() {
+                if(chamferHeight2 > 0) {
+                    translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
+                }
+                translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight), r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
+                if(chamferHeight > 0) {
+                    cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+                }
+            }
         }
-        translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight), r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
-        if(chamferHeight != 0) {
-            cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+
+        if(chamferHeight < 0 || chamferHeight2 < 0) {
+            if(chamferHeight2 < 0) {
+                translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
+            }
+            translate([0, 0, abs(chamferHeight) - lowerOverLength]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight) + lowerOverLength + upperOverLength, r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
+            if(chamferHeight < 0) {
+                cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+            }
         }
     }
     module box(brim = abs(min(chamferHeight2, 0)) + 1) {
