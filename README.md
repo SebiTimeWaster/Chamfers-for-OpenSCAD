@@ -35,6 +35,9 @@ Don't forget to import the library to your script by adding this to the first li
 Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/OpenSCAD-Chamfer/blob/master/Demo/Demo.scad) to see how to use it.
 
 ## Changelog
+v1.1:
+* Improved preview rendering of cylinders (see [Artifact-Test.scad](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/blob/master/Demo/Artifact-Test.scad))
+
 v1.0:
 * Changed parameters of `chamferCube` and `chamferCylinder` to work similar to the original `cube` and `cylinder` commands. This is not a breaking change, but please contact me should you encounter compatibility problems.
 * Changed license from GPL 3.0 to Creative Commons license to give users more freedom.
