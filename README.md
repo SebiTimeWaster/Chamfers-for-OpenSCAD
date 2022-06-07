@@ -43,8 +43,8 @@ Please read the documentation in [Demo.scad](https://github.com/SebiTimeWaster/O
 
 v1.2:
 
--   Added the possibility to create arbitrary sided "cylinders" to create geometic shapes like extruded triangles and so on
--   Fixed regression introduced in v1.1 where certain radius combinations result in wrong form generation due to wrong segment calculation
+-   Added the possibility to create arbitrary sided "cylinders" to create geometric shapes like extruded triangles and so on
+-   Fixed regression introduced in v1.1 where certain radius combinations result in wrong form generation due to broken segment calculation
 -   Improved demo file formatting
 
 v1.1:
