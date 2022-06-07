@@ -3,14 +3,14 @@
   * Creative Commons Attribution-NonCommercial-ShareAlike 3.0
   * licence, please respect it.
   *
-  * Chamfered primitives for OpenSCAD v1.0
+  * Chamfered primitives for OpenSCAD v1.2 - By TimeWaster
   */
 
 include <Chamfers-for-OpenSCAD/Chamfer.scad>;
 
 /**
   * This code is only for testing purposes, please ignore.
-  */    
+  */
 
 difference() {
     cube([137, 8, 10]);

@@ -3,7 +3,7 @@
   * Creative Commons Attribution-NonCommercial-ShareAlike 3.0
   * licence, please respect it.
   *
-  * Chamfered primitives for OpenSCAD v1.0
+  * Chamfered primitives for OpenSCAD v1.2 - By TimeWaster
   */
 
 
@@ -12,11 +12,11 @@
   * cube. The chamfers are diectly printable on Fused deposition
   * modelling (FDM) printers without support structures.
   *
-  * @param  size      The size of the cube along the [x, y, z] axis, 
+  * @param  size      The size of the cube along the [x, y, z] axis,
   *                     example: [1, 2, 3]
-  * @param  chamfers  Which chamfers to render along the [x, y, z] axis, 
+  * @param  chamfers  Which chamfers to render along the [x, y, z] axis,
   *                     example: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
-  *                     X axis: 4 values in clockwise order starting from 
+  *                     X axis: 4 values in clockwise order starting from
   *                     the zero point, as seen from "Left view" (Ctrl + 6)
   *                     Y axis: 4 values in clockwise order starting from
   *                     the zero point, as seen from "Front view" (Ctrl + 8)
@@ -38,11 +38,11 @@ module chamferCube(size, chamfers = [undef, undef, undef], ch = 1, ph1 = 1, ph2 
         ph2      = (chamferX == undef) ? ph2 : chamferX;
         ph3      = (chamferY == undef) ? ph3 : chamferY;
         ph4      = (chamferZ == undef) ? ph4 : chamferZ;
-        
+
         chamferCubeImpl(size, chamfers, ch, ph1, ph2, ph3, ph4);
     }
 }
-    
+
 module chamferCubeImpl(sizeX, sizeY, sizeZ, chamferHeight, chamferX, chamferY, chamferZ) {
     chamferX = (chamferX == undef) ? [1, 1, 1, 1] : chamferX;
     chamferY = (chamferY == undef) ? [1, 1, 1, 1] : chamferY;
@@ -82,10 +82,10 @@ module chamferCubeImpl(sizeX, sizeY, sizeZ, chamferHeight, chamferX, chamferY, c
   * @param  r    Radius of the cylinder (At the bottom)
   * @param  r2   Radius of the cylinder (At the top)
   * @param  ch   The "height" of the chamfer at radius 1 as
-  *                seen from one of the dimensional planes (The 
+  *                seen from one of the dimensional planes (The
   *                real length is side c in a right angled triangle)
   * @param  ch2  The "height" of the chamfer at radius 2 as
-  *                seen from one of the dimensional planes (The 
+  *                seen from one of the dimensional planes (The
   *                real length is side c in a right angled triangle)
   * @param  a    The angle of the visible part of a wedge
   *                starting from the x axis counter-clockwise
@@ -101,7 +101,7 @@ module chamferCylinder(h, r, r2 = undef, ch = 1, ch2 = undef, a = 0, q = -1.0, h
     ch2 = (chamferHeight2 == undef) ? ch2 : chamferHeight2;
     a   = (angle == undef) ? a : angle;
     q   = (quality == undef) ? q : quality;
-    
+
     height         = h;
     radius         = r;
     radius2        = (r2 == undef) ? r : r2;
@@ -109,30 +109,31 @@ module chamferCylinder(h, r, r2 = undef, ch = 1, ch2 = undef, a = 0, q = -1.0, h
     chamferHeight2 = (ch2 == undef) ? ch : ch2;
     angle          = a;
     quality        = q;
-    
+
     module cc() {
         upperOverLength = (chamferHeight2 >= 0) ? 0 : 0.01;
         lowerOverLength = (chamferHeight >= 0) ? 0 : 0.01;
+        cSegs = circleSegments(max(radius, radius2), quality);
 
         if(chamferHeight >= 0 || chamferHeight2 >= 0) {
             hull() {
                 if(chamferHeight2 > 0) {
-                    translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
+                    translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = cSegs);
                 }
-                translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight), r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
+                translate([0, 0, abs(chamferHeight)]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight), r1 = radius, r2 = radius2, $fn = cSegs);
                 if(chamferHeight > 0) {
-                    cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+                    cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = cSegs);
                 }
             }
         }
 
         if(chamferHeight < 0 || chamferHeight2 < 0) {
             if(chamferHeight2 < 0) {
-                translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = circleSegments(radius2, quality));
+                translate([0, 0, height - abs(chamferHeight2)]) cylinder(abs(chamferHeight2), r1 = radius2, r2 = radius2 - chamferHeight2, $fn = cSegs);
             }
-            translate([0, 0, abs(chamferHeight) - lowerOverLength]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight) + lowerOverLength + upperOverLength, r1 = radius, r2 = radius2, $fn = circleSegments(max(radius, radius2), quality));
+            translate([0, 0, abs(chamferHeight) - lowerOverLength]) cylinder(height - abs(chamferHeight2) - abs(chamferHeight) + lowerOverLength + upperOverLength, r1 = radius, r2 = radius2, $fn = cSegs);
             if(chamferHeight < 0) {
-                cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = circleSegments(radius, quality));
+                cylinder(abs(chamferHeight), r1 = radius - chamferHeight, r2 = radius, $fn = cSegs);
             }
         }
     }
@@ -169,7 +170,7 @@ module chamferCylinder(h, r, r2 = undef, ch = 1, ch2 = undef, a = 0, q = -1.0, h
   *
   * @return  The number of segments for the circle
   */
-function circleSegments(r, q = -1.0) = (r * PI * 4 + 40) * ((q >= 0.0) ? q : globalCircleQuality);
+function circleSegments(r, q = -1.0) = (q >= 3 ? q : ((r * PI * 4 + 40) * ((q >= 0.0) ? q : globalCircleQuality)));
 
 // set global quality to 1.0, can be overridden by user
 globalCircleQuality = 1.0;
