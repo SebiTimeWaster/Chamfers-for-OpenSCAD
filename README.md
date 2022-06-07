@@ -20,7 +20,7 @@ Additionally
 
 First find out where your library folder is by opening OpenSCAD and clicking "File -> Show Library Folder", then do:
 
--   [Download](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/releases) the library
+-   [Download](https://github.com/SebiTimeWaster/Chamfers-for-OpenSCAD/releases) the library (Download the ZIP!)
 -   Unpack it to the library folder
 -   Restart OpenSCAD
 
