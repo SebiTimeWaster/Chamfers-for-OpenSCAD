@@ -7,7 +7,7 @@
   */
 
 // this changed from "use" to "include" with v0.3!!!
-include <Chamfers-for-OpenSCAD/Chamfer.scad>;
+include <../Chamfer.scad>;
 
 
 /**
