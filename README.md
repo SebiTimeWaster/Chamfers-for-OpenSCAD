@@ -1,3 +1,5 @@
+# 🔴🔴🔴 This project is archived. If you are interested in continuing it, fork it. 🔴🔴🔴
+
 # Chamfered primitives for OpenSCAD
 
 A library to create primitives with 45° chamfers in OpenSCAD.
